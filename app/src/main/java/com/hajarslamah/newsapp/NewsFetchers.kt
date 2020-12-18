@@ -16,10 +16,9 @@ class NewsFetchers {
     init {
         val retrofit: Retrofit = Retrofit.
         Builder()
-            .baseUrl("https://192.168.1.1/News_Challange/api/")
+            .baseUrl("http://192.168.191.1")
             .addConverterFactory(
-                GsonConverterFactory.create()
-            ).build()
+                GsonConverterFactory.create()            ).build()
         newApi = retrofit.create(NewsApi::class.java)
     }
     fun fetchContents(): LiveData<List<NewsData>> {
@@ -34,9 +33,12 @@ class NewsFetchers {
             ) {
                 Log.d(TAG, "Response received ${response.code().toString()} ")
                 val newshResponse: NewsResponse? = response.body()
+
                 var newsItems: List<NewsData> = newshResponse?.newItems
+
                     ?: mutableListOf()
                 responseLiveData.value = newsItems
+                Log.d(TAG, "Response data ${newsItems} ")
             }
         })
         return responseLiveData}

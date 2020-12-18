@@ -7,6 +7,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface NewsApi {
-    @GET("newsApi.php")
+    @GET("/News_Challange/api/newsApi.php")
     fun fetchContents(): Call<NewsResponse>
 }
