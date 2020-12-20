@@ -11,4 +11,5 @@ class NewsViewModel : ViewModel() {
         newsLiveData = NewsFetchers().fetchContents();
         Log.d("viwmodel", "Response received  ")
     }
+
 }

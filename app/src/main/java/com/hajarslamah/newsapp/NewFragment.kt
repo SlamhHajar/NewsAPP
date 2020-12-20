@@ -1,5 +1,6 @@
 package com.hajarslamah.newsapp
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,18 +12,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NewFragment : Fragment() {
+//    interface Callbacks {
+//        fun onNewSelected(NewId: Int)    }
+//    private var callbacks: Callbacks? = null
+//    //////////////////////////////////////////@onAttach////////////
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        callbacks = context as Callbacks?    }
+//    /////////////////////////////////////////////onDetach/////////////////////
+//    override fun onDetach() {
+//        super.onDetach()
+//        callbacks = null    }
     private lateinit var newRecyclerView: RecyclerView
     private lateinit var newsViewModel: NewsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,24 +55,27 @@ class NewFragment : Fragment() {
         newRecyclerView.layoutManager = LinearLayoutManager(context)
         return view 
     }
-   private  class NewsHolder(items: View )
+    private  inner  class NewsHolder(items: View )
         : RecyclerView.ViewHolder(items) ,View.OnClickListener {
+private lateinit var new:NewsData
        val imgView=items.findViewById(R.id.img) as TextView
        val titleView=items.findViewById(R.id.title_news) as TextView
        val dateView=items.findViewById(R.id.date) as TextView
+        val detialesView=items.findViewById(R.id.detail) as TextView
        init {
            items.setOnClickListener(this)
        }
        fun bindNew(new:NewsData){
            titleView.text=new.title
            dateView.text=new.date.toString()
+           detialesView.text=new.details
        }
 
        override fun onClick(p0: View?) {
-           TODO("Not yet implemented")
+         //  callbacks?.onNewSelected(new.ID)
        }
    }
-    private class NewsAdapter(private val newItems: List<NewsData>)
+    private inner class NewsAdapter(private val newItems: List<NewsData>)
         : RecyclerView.Adapter<NewsHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
             val v=  LayoutInflater.from(parent.context).inflate(
