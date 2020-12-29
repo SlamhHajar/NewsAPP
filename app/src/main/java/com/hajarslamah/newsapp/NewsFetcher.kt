@@ -10,7 +10,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 private const val TAG = "newFetcher"
-class NewsFetchers {
+class NewsFetcher {
     private val newApi: NewsApi
 
     init {
@@ -42,5 +42,26 @@ class NewsFetchers {
             }
         })
         return responseLiveData}
+    fun fetchNew(id:Int): LiveData<List<NewsData>> {
+        val responseLiveData: MutableLiveData<List<NewsData>> = MutableLiveData()
+        val NewsRequest: Call<Details> = newApi.fetchNew(id)
+
+        NewsRequest.enqueue(object : Callback<Details> {
+
+            override fun onFailure(call: Call<Details>, t: Throwable) {
+                Log.e("fetchDetailsNews", "Failed to fetch  news Details",t)
+            }
+
+            override fun onResponse(call: Call<Details>, response: Response<Details>) {
+                Log.d("fetchDetailsNews", "Details News Response received")
+                val detailsNewsResponse: Details? = response.body()
+                var newsItems: List<NewsData>? = detailsNewsResponse?.newDetail
+
+                responseLiveData.value = newsItems
+            }
+        })
+
+        return responseLiveData
+    }
 
 }
