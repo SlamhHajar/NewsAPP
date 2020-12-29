@@ -49,11 +49,11 @@ class NewsFetcher {
         NewsRequest.enqueue(object : Callback<Details> {
 
             override fun onFailure(call: Call<Details>, t: Throwable) {
-                Log.e("fetchDetailsNews", "Failed to fetch  news Details",t)
+                Log.e("fetchDetails", "Failed to fetch  news Details",t)
             }
 
             override fun onResponse(call: Call<Details>, response: Response<Details>) {
-                Log.d("fetchDetailsNews", "Details News Response received")
+                Log.d("fetchDetails", "Details Response received")
                 val detailsNewsResponse: Details? = response.body()
                 var newsItems: List<NewsData>? = detailsNewsResponse?.newDetail
 
